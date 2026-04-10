@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Inteligencia Social — 6–9 Abril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --accent-red: #e8414a;
+    --accent-amber: #f0a030;
+    --accent-green: #2ecc8a;
+    --accent-blue: #4a90e8;
+    --accent-violet: #9b59d4;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+font-family: ‘DM Mono’, monospace;
+background: var(–bg);
+color: var(–text);
+min-height: 100vh;
+padding-bottom: 40px;
+overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+background: var(–surface);
+border-bottom: 1px solid var(–border);
+padding: 20px 16px 16px;
+position: sticky;
+top: 0;
+z-index: 100;
+backdrop-filter: blur(12px);
+}
+
+.header-top {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 10px;
+}
+
+.header-label {
+font-family: ‘Syne’, sans-serif;
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 0.2em;
+color: var(–muted);
+text-transform: uppercase;
+}
+
+.thermo {
+display: flex;
+align-items: center;
+gap: 6px;
+background: rgba(240, 160, 48, 0.1);
+border: 1px solid rgba(240, 160, 48, 0.25);
+border-radius: 20px;
+padding: 4px 10px;
+}
+
+.thermo-dot {
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: var(–accent-amber);
+animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 1; transform: scale(1); }
+50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.thermo-text {
+font-family: ‘Syne’, sans-serif;
+font-size: 10px;
+font-weight: 700;
+color: var(–accent-amber);
+letter-spacing: 0.08em;
+}
+
+.header-title {
+font-family: ‘Syne’, sans-serif;
+font-size: 18px;
+font-weight: 800;
+letter-spacing: -0.01em;
+line-height: 1.1;
+}
+
+.header-title span {
+color: var(–muted);
+font-weight: 400;
+}
+
+.header-date {
+font-size: 11px;
+color: var(–muted);
+margin-top: 4px;
+}
+
+/* ── TABS ── */
+.tabs {
+display: flex;
+background: var(–surface2);
+border-bottom: 1px solid var(–border);
+position: sticky;
+top: 100px;
+z-index: 90;
+}
+
+.tab {
+flex: 1;
+padding: 14px 8px;
+text-align: center;
+font-family: ‘Syne’, sans-serif;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.08em;
+color: var(–muted);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+transition: all 0.2s;
+text-transform: uppercase;
+}
+
+.tab.active {
+color: var(–text);
+border-bottom-color: var(–accent-amber);
+}
+
+/* ── SECTIONS ── */
+.section { display: none; padding: 0 0 20px; }
+.section.active { display: block; }
+
+/* ── RESUMEN EJECUTIVO ── */
+.exec-summary {
+margin: 16px;
+background: linear-gradient(135deg, #1a1020 0%, #0f1a20 100%);
+border: 1px solid rgba(240,160,48,0.2);
+border-radius: 12px;
+padding: 20px;
+position: relative;
+overflow: hidden;
+}
+
+.exec-summary::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, var(–accent-amber), var(–accent-red), transparent);
+}
+
+.exec-label {
+font-family: ‘Syne’, sans-serif;
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 0.25em;
+color: var(–accent-amber);
+text-transform: uppercase;
+margin-bottom: 10px;
+}
+
+.exec-text {
+font-size: 12.5px;
+line-height: 1.75;
+color: #c8c8d8;
+}
+
+.exec-highlight {
+display: block;
+margin-top: 14px;
+padding: 12px 14px;
+background: rgba(232, 65, 74, 0.1);
+border-left: 2px solid var(–accent-red);
+border-radius: 0 6px 6px 0;
+font-family: ‘Syne’, sans-serif;
+font-size: 12px;
+font-weight: 600;
+color: #f0a8ac;
+line-height: 1.5;
+}
+
+/* ── METRICS GRID ── */
+.metrics-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin: 16px;
+}
+
+.metric-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px;
+position: relative;
+}
+
+.metric-card.full { grid-column: 1 / -1; }
+
+.metric-value {
+font-family: ‘Syne’, sans-serif;
+font-size: 22px;
+font-weight: 800;
+line-height: 1;
+margin-bottom: 4px;
+}
+
+.metric-label {
+font-size: 10px;
+color: var(–muted);
+line-height: 1.4;
+}
+
+.metric-trend {
+position: absolute;
+top: 10px;
+right: 10px;
+font-size: 14px;
+}
+
+.metric-card.red .metric-value { color: var(–accent-red); }
+.metric-card.amber .metric-value { color: var(–accent-amber); }
+.metric-card.green .metric-value { color: var(–accent-green); }
+.metric-card.blue .metric-value { color: var(–accent-blue); }
+
+/* ── SECTION HEADER ── */
+.section-header {
+padding: 20px 16px 10px;
+font-family: ‘Syne’, sans-serif;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–muted);
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.section-header::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–border);
+}
+
+/* ── NARRATIVE CARDS ── */
+.narrative-card {
+margin: 0 16px 12px;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+overflow: hidden;
+}
+
+.narrative-header {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+padding: 14px;
+cursor: pointer;
+}
+
+.narrative-num {
+font-family: ‘Syne’, sans-serif;
+font-size: 10px;
+font-weight: 700;
+color: var(–muted);
+min-width: 20px;
+padding-top: 1px;
+}
+
+.narrative-title {
+font-family: ‘Syne’, sans-serif;
+font-size: 13px;
+font-weight: 700;
+line-height: 1.35;
+flex: 1;
+}
+
+.narrative-badge {
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.1em;
+padding: 3px 7px;
+border-radius: 10px;
+white-space: nowrap;
+margin-top: 2px;
+}
+
+.badge-alto { background: rgba(232,65,74,0.15); color: var(–accent-red); border: 1px solid rgba(232,65,74,0.2); }
+.badge-medio { background: rgba(240,160,48,0.15); color: var(–accent-amber); border: 1px solid rgba(240,160,48,0.2); }
+.badge-riesgo { background: rgba(155,89,212,0.15); color: var(–accent-violet); border: 1px solid rgba(155,89,212,0.2); }
+
+.narrative-body {
+padding: 0 14px 14px 44px;
+font-size: 12px;
+line-height: 1.7;
+color: #a0a0b8;
+display: none;
+}
+
+.narrative-body.open { display: block; }
+
+.narrative-meta {
+margin-top: 10px;
+font-size: 10.5px;
+color: var(–muted);
+border-top: 1px solid var(–border);
+padding-top: 10px;
+}
+
+.narrative-meta strong { color: #8888a8; }
+
+.chevron {
+font-size: 10px;
+color: var(–muted);
+transition: transform 0.2s;
+padding-top: 2px;
+}
+
+.chevron.open { transform: rotate(180deg); }
+
+/* ── EVENT CARDS ── */
+.event-card {
+margin: 0 16px 10px;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px;
+display: flex;
+gap: 12px;
+}
+
+.event-icon {
+font-size: 20px;
+line-height: 1;
+flex-shrink: 0;
+width: 32px;
+text-align: center;
+}
+
+.event-content { flex: 1; min-width: 0; }
+
+.event-title {
+font-family: ‘Syne’, sans-serif;
+font-size: 12.5px;
+font-weight: 700;
+margin-bottom: 4px;
+line-height: 1.3;
+}
+
+.event-geo {
+font-size: 10px;
+color: var(–accent-blue);
+margin-bottom: 5px;
+}
+
+.event-desc {
+font-size: 11.5px;
+color: #9090a8;
+line-height: 1.6;
+}
+
+/* ── RECOMENDACIONES ── */
+.rec-card {
+margin: 0 16px 10px;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px 14px 14px 50px;
+position: relative;
+}
+
+.rec-num {
+position: absolute;
+left: 14px;
+top: 14px;
+font-family: ‘Syne’, sans-serif;
+font-size: 18px;
+font-weight: 800;
+color: rgba(255,255,255,0.06);
+line-height: 1;
+}
+
+.rec-title {
+font-family: ‘Syne’, sans-serif;
+font-size: 12.5px;
+font-weight: 700;
+margin-bottom: 6px;
+line-height: 1.35;
+color: var(–text);
+}
+
+.rec-body {
+font-size: 11.5px;
+color: #8888a8;
+line-height: 1.65;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(–border); margin: 4px 16px 16px; }
+
+/* ── FOOTER ── */
+.footer {
+margin: 24px 16px 0;
+padding-top: 16px;
+border-top: 1px solid var(–border);
+font-size: 10px;
+color: var(–muted);
+line-height: 1.7;
+}
+
+.footer strong { color: #6868a0; }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-label">Informe de Inteligencia Social</div>
+    <div class="thermo">
+      <div class="thermo-dot"></div>
+      <div class="thermo-text">MEDIO-ALTO</div>
+    </div>
+  </div>
+  <div class="header-title">Seguridad <span>&amp;</span> Vivienda</div>
+  <div class="header-date">6–9 de abril de 2026 · Elaborado: 9 abr 2026</div>
+</div>
+
+<!-- TABS -->
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('seguridad')">🔒 Seguridad</div>
+  <div class="tab" onclick="switchTab('vivienda')">🏠 Vivienda</div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+
+<!--              SEGURIDAD                  -->
+
+<!-- ════════════════════════════════════════ -->
+
+<div id="seguridad" class="section active">
+
+  <!-- RESUMEN EJECUTIVO -->
+
+  <div class="exec-summary">
+    <div class="exec-label">P8 — Resumen Ejecutivo</div>
+    <div class="exec-text">
+      La semana está dominada por una acumulación de hechos violentos de alta visibilidad. El apuñalamiento de un menor de 17 años en Vitoria-Gasteiz (4.º en 2026) evidencia bandas juveniles con movilidad interterritorial. El feminicidio de Basauri y la liberación provisional del detenido —pese a orden de alejamiento activa incumplida— detonan movilización feminista y cuestionan el sistema de protección.
+    </div>
+    <span class="exec-highlight">⚡ Acción prioritaria: protocolo ante bandas interterritoriales + auditoría urgente del sistema de órdenes de alejamiento en violencia de género.</span>
+  </div>
+
+  <!-- MÉTRICAS -->
+
+  <div class="section-header">Métricas clave</div>
+  <div class="metrics-grid">
+    <div class="metric-card red">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">4</div>
+      <div class="metric-label">Apuñalamientos en Vitoria-Gasteiz en 2026</div>
+    </div>
+    <div class="metric-card amber">
+      <div class="metric-trend">→</div>
+      <div class="metric-value">7</div>
+      <div class="metric-label">Detenidos en libertad provisional</div>
+    </div>
+    <div class="metric-card amber">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">1</div>
+      <div class="metric-label">Feminicidio en la CAV (Basauri)</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-trend">↘</div>
+      <div class="metric-value">0</div>
+      <div class="metric-label">Fallecidos en carretera Semana Santa</div>
+    </div>
+    <div class="metric-card blue full">
+      <div class="metric-trend">↘</div>
+      <div class="metric-value">−29%</div>
+      <div class="metric-label">Descenso de accidentalidad vs 2025 · 78 accidentes totales</div>
+    </div>
+    <div class="metric-card full" style="background: var(--surface)">
+      <div class="metric-value" style="color: var(--accent-violet); font-size:18px;">39 barreras</div>
+      <div class="metric-label">Pitagone F18 cedidas por Bilbao Ekintza a la Ertzaintza · vigencia 4 años</div>
+    </div>
+  </div>
+
+  <!-- EVENTOS -->
+
+  <div class="section-header">P1 — Eventos</div>
+
+  <div class="event-card">
+    <div class="event-icon">🔪</div>
+    <div class="event-content">
+      <div class="event-title">Apuñalamiento menor (17 a.) — 7 detenidos</div>
+      <div class="event-geo">📍 Vitoria-Gasteiz / Murgia / Bilbao</div>
+      <div class="event-desc">Jueves 2 abr, 18:30h, Avda. de los Huetos. Presuntos implicados de bandas G9 Northbloddy y LDS. Los 7 detenidos liberados en provisional el lunes 6.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">⚠️</div>
+    <div class="event-content">
+      <div class="event-title">Nueva pelea con navajas — Casco Viejo</div>
+      <div class="event-geo">📍 Vitoria-Gasteiz</div>
+      <div class="event-desc">Segunda agresión con arma blanca dos días después. Ertzaintza cuenta con grabaciones e identidad de los implicados.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">🕯️</div>
+    <div class="event-content">
+      <div class="event-title">Feminicidio en Basauri — libertad provisional</div>
+      <div class="event-geo">📍 Basauri (Bizkaia)</div>
+      <div class="event-desc">Amaia, 44 años, primera víctima machista en Bizkaia en 2026. El detenido incumplía orden de alejamiento activa. +100 personas en concentraciones de repulsa.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">🚔</div>
+    <div class="event-content">
+      <div class="event-title">Desarticulación grupo robos en garajes</div>
+      <div class="event-geo">📍 Beasain / Goierri (Gipuzkoa)</div>
+      <div class="event-desc">4 detenidos (29–40 años). Incautados ~100 objetos: herramientas, maquinaria, material informático.</div>
+    </div>
+  </div>
+
+  <!-- NARRATIVAS -->
+
+  <div class="section-header">P4 — Narrativas</div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N1</div>
+      <div class="narrative-title">Violencia juvenil organizada con movilidad interterritorial</div>
+      <div>
+        <div class="narrative-badge badge-alto">ALTO</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Las bandas G9 Northbloddy y LDS se desplazan de forma planificada a otras provincias. La liberación provisional de los 7 detenidos alimenta la percepción de impunidad.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Alcaldía Vitoria, Ertzaintza, medios locales</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N2</div>
+      <div class="narrative-title">Instrumentalización xenófoba de datos delictivos</div>
+      <div>
+        <div class="narrative-badge badge-riesgo">RIESGO MUY ELEVADO</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Comentarios xenófobos vinculados al caso Beasain. El medio Donostitik alertó de que sus redes estaban fomentando el racismo. Patrón recurrente en el ecosistema digital vasco.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Cuentas anónimas X e Instagram</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N3</div>
+      <div class="narrative-title">Feminicidio de Basauri: fracaso del sistema de protección</div>
+      <div>
+        <div class="narrative-badge badge-alto">ALTO</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Orden de alejamiento activa incumplida reiteradamente. La libertad provisional intensifica la indignación. Interpela directamente al Departamento de Seguridad y al sistema judicial.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Emakunde, Movimiento Feminista Basauri</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N4</div>
+      <div class="narrative-title">Ertzaintza como referente europeo en seguridad de eventos</div>
+      <div>
+        <div class="narrative-badge badge-medio">MEDIO</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Bilbao elegida sede de reunión UEFA con responsables policiales. Convenio de barreras antivehículo refuerza la imagen institucional. Narrativa deliberadamente cultivada por el Dpto. de Seguridad.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Dpto. Seguridad, Ertzaintza, UEFA</div>
+    </div>
+  </div>
+
+  <!-- RECOMENDACIONES -->
+
+  <div class="section-header">P7 — Recomendaciones</div>
+
+  <div class="rec-card">
+    <div class="rec-num">01</div>
+    <div class="rec-title">Protocolo de intervención urgente ante bandas interterritoriales</div>
+    <div class="rec-body">Activar coordinación interprovincial Bizkaia–Álava con alertas tempranas y canales entre comisarías.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">02</div>
+    <div class="rec-title">Revisar sistema de control de órdenes de alejamiento</div>
+    <div class="rec-body">Auditoría en Bizkaia. Valorar dispositivos de seguimiento electrónico para agresores reincidentes.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">03</div>
+    <div class="rec-title">Reforzar coordinación judicial-policial en violencia de género</div>
+    <div class="rec-body">Impulsar protocolos para que los informes de riesgo de la Ertzaintza sean considerados en medidas cautelares.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">04</div>
+    <div class="rec-title">Estrategia comunicativa ante instrumentalización xenófoba</div>
+    <div class="rec-body">Protocolo de contextualización de datos de origen de detenidos. Mecanismos de respuesta en redes.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">05</div>
+    <div class="rec-title">Plan de despliegue de las 39 barreras antivehículo</div>
+    <div class="rec-body">Priorizar: Finales Rugby San Mamés (22–23 mayo), Itzulia Basque Country y otros grandes eventos 2026.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">06</div>
+    <div class="rec-title">Intensificar seguimiento criminológico bandas en Gipuzkoa</div>
+    <div class="rec-body">Reforzar grupo especializado en pandillas y prevención en centros educativos del Goierri.</div>
+  </div>
+
+  <div class="footer">
+    <strong>Fuentes verificadas:</strong> Ertzaintza.euskadi.eus · Euskadi.eus/Irekia · Noticias de Álava · Deia · El Diario Euskadi · Crónica Vasca · ORAIN/EITB · GipuzkoaGaur · Cope · Donostitik · Bilbao Hiria
+  </div>
+
+</div><!-- /seguridad -->
+
+<!-- ════════════════════════════════════════ -->
+
+<!--              VIVIENDA                   -->
+
+<!-- ════════════════════════════════════════ -->
+
+<div id="vivienda" class="section">
+
+  <!-- RESUMEN EJECUTIVO -->
+
+  <div class="exec-summary">
+    <div class="exec-label">P8 — Resumen Ejecutivo</div>
+    <div class="exec-text">
+      La semana está dominada por la repercusión mediática del fondo de vivienda de 2.000 M€ y el plan de sobreelevación de tejados (189 apartamentos en 5 municipios, horizonte 2029-30). El mercado no da tregua: Donostia lidera el ranking estatal con 7.282 €/m², el alquiler libre supera 819 €/mes y los expedientes en Etxebide se acercan a 100.000.
+    </div>
+    <span class="exec-highlight">⚡ Acción prioritaria: publicar fecha concreta del IRA en Bizkaia y Araba antes del 30 de junio de 2026 para que las zonas tensionadas tengan efecto real.</span>
+  </div>
+
+  <!-- MÉTRICAS -->
+
+  <div class="section-header">Métricas clave</div>
+  <div class="metrics-grid">
+    <div class="metric-card red">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">7.282</div>
+      <div class="metric-label">€/m² Donostia · 1ª capital española</div>
+    </div>
+    <div class="metric-card amber">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">819€</div>
+      <div class="metric-label">Alquiler libre medio/mes en Euskadi (+30% desde 2016)</div>
+    </div>
+    <div class="metric-card red full">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">99.872</div>
+      <div class="metric-label">Expedientes activos en Etxebide · 80% solicita alquiler</div>
+    </div>
+    <div class="metric-card amber">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">>37%</div>
+      <div class="metric-label">Esfuerzo económico familiar en vivienda</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">15</div>
+      <div class="metric-label">Municipios zona tensionada · 4 en trámite</div>
+    </div>
+    <div class="metric-card blue full">
+      <div class="metric-trend">↗</div>
+      <div class="metric-value">2.000 M€</div>
+      <div class="metric-label">Fondo Social de Vivienda anunciado · lanzamiento previsto antes del verano</div>
+    </div>
+  </div>
+
+  <!-- EVENTOS -->
+
+  <div class="section-header">P1 — Eventos</div>
+
+  <div class="event-card">
+    <div class="event-icon">💰</div>
+    <div class="event-content">
+      <div class="event-title">Fondo Social de Vivienda — 2.000 M€</div>
+      <div class="event-geo">📍 Madrid / Rebuild 2026 · Alcance: toda Euskadi</div>
+      <div class="event-desc">Financiación público-privada: 30% público + BEI, ICO y EPSVs. Retribución ~6%. Calificación permanente. Lanzamiento antes del verano.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">🏗️</div>
+    <div class="event-content">
+      <div class="event-title">Plan de "levantes" sobre tejados — 189 aptos.</div>
+      <div class="event-geo">📍 Vitoria-Gasteiz (82), Bilbao (28), Leioa (34), Arrasate (22), Mutriku (23)</div>
+      <div class="event-desc">Módulos prefabricados de madera y acero sobre edificios públicos. Sin consumir suelo. Entrega 2029-2030. Difusión estatal.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">📋</div>
+    <div class="event-content">
+      <div class="event-title">IRA Bizkaia y Araba — pendiente publicación</div>
+      <div class="event-geo">📍 Bizkaia, Araba</div>
+      <div class="event-desc">Datos fiscales ya remitidos a Eustat. Sin fecha exacta de publicación. Los límites efectivos de precio no se aplican aún en estas capitales.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">🛡️</div>
+    <div class="event-content">
+      <div class="event-title">Programa Alokaplus — seguro público de alquiler</div>
+      <div class="event-geo">📍 Zonas tensionadas de Euskadi</div>
+      <div class="event-desc">Cubre hasta 20 mensualidades en casos especiales. Aplicable en municipios tensionados con renta ajustada al índice. Lanzamiento tras el verano.</div>
+    </div>
+  </div>
+
+  <div class="event-card">
+    <div class="event-icon">🏭</div>
+    <div class="event-content">
+      <div class="event-title">Eraiki Hub — construcción industrializada (32 M€)</div>
+      <div class="event-geo">📍 Euskadi · 2026–2030</div>
+      <div class="event-desc">Impulsado junto a Tecnalia y el Clúster de la Construcción del País Vasco.</div>
+    </div>
+  </div>
+
+  <!-- NARRATIVAS -->
+
+  <div class="section-header">P4 — Narrativas</div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N1</div>
+      <div class="narrative-title">Euskadi como laboratorio de soluciones innovadoras</div>
+      <div>
+        <div class="narrative-badge badge-alto">ALTO · INSTITUCIONAL</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Levantes, fondo 2.000 M€, Eraiki Hub y Alokaplus articulan un relato de liderazgo autonómico. La UE valida el modelo vasco como referencia para el Plan Europeo de Vivienda Asequible.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Denis Itxaso, Irekia, OVV</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N2</div>
+      <div class="narrative-title">La brecha entre el anuncio y la entrega</div>
+      <div>
+        <div class="narrative-badge badge-riesgo">RIESGO CREDIBILIDAD</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Levantes hasta 2029-30; IRA Bizkaia/Araba sin fecha; fondo sin estructura jurídica confirmada. Si el IRA no se publica en el primer semestre, la percepción de instrumento cosmético puede consolidarse.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Asociaciones inquilinos, Etikalia, analistas</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N3</div>
+      <div class="narrative-title">Vivienda como problema de clases medias</div>
+      <div>
+        <div class="narrative-badge badge-alto">ALTO</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Itxaso señala que el mercado "no deja lugar para las clases medias, por muy oxigenadas que estén en términos de ingresos". Amplía el marco más allá de la vulnerabilidad social.
+      <div class="narrative-meta"><strong>Potencial:</strong> Movilización electoral · demanda de políticas más ambiciosas</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N4</div>
+      <div class="narrative-title">Donostia: símbolo de un mercado incontrolable</div>
+      <div>
+        <div class="narrative-badge badge-medio">MEDIO-ALTO</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      7.282 €/m² supera a Madrid. Circula en medios nacionales. Narrativa de excepcionalidad vasca: positiva en competitividad, muy negativa en acceso. Convive con casi 100.000 expedientes en Etxebide.
+      <div class="narrative-meta"><strong>Riesgo:</strong> Cohesión social · deslegitimación de políticas públicas</div>
+    </div>
+  </div>
+
+  <div class="narrative-card">
+    <div class="narrative-header" onclick="toggleNarrative(this)">
+      <div class="narrative-num">N5</div>
+      <div class="narrative-title">Resistencia vecinal a las soluciones sobre tejados</div>
+      <div>
+        <div class="narrative-badge badge-medio">EMERGENTE</div>
+        <div class="chevron">▼</div>
+      </div>
+    </div>
+    <div class="narrative-body">
+      Vecinos afectados muestran rechazo ante obras en azoteas y nuevos vecinos sobre sus cabezas. Incipiente pero con potencial de escalar si no se gestiona participativamente antes de la licitación.
+      <div class="narrative-meta"><strong>Portavoces:</strong> Comunidades de propietarios en Vitoria, Bilbao, Leioa, Arrasate, Mutriku</div>
+    </div>
+  </div>
+
+  <!-- RECOMENDACIONES -->
+
+  <div class="section-header">P7 — Recomendaciones</div>
+
+  <div class="rec-card">
+    <div class="rec-num">01</div>
+    <div class="rec-title">Fijar fecha concreta para el IRA en Bizkaia y Araba</div>
+    <div class="rec-body">Publicar antes del 30 de junio de 2026. Comunicación anticipada a inquilinos y arrendadores para facilitar el cumplimiento desde el primer día.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">02</div>
+    <div class="rec-title">Protocolo de participación vecinal — proyecto levantes</div>
+    <div class="rec-body">Alokabide debe diseñar en los próximos 60 días un protocolo de información, compensación y participación antes de la fase de licitación.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">03</div>
+    <div class="rec-title">Concretar estructura jurídica del Fondo de 2.000 M€</div>
+    <div class="rec-body">Publicar antes del 30 de mayo la estructura, compromisos de cada actor y calendario de primeras inversiones concretas.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">04</div>
+    <div class="rec-title">Reforzar Bizigune con incentivos en zonas tensionadas</div>
+    <div class="rec-body">Bonificaciones fiscales adicionales, garantías de mantenimiento y contratos de gestión integral para pequeños tenedores que disuaden los nuevos índices.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">05</div>
+    <div class="rec-title">Acelerar declaración de 4 municipios en trámite</div>
+    <div class="rec-body">Arrasate-Mondragón, Zestoa, Pasaia y Basauri. Cada mes de retraso implica contratos sin protección de precios.</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">06</div>
+    <div class="rec-title">Campaña de información sobre buzón de denuncias</div>
+    <div class="rec-body">Campaña multicanal sobre derechos en zonas tensionadas, uso del buzón y simulador IRA. Dirigida especialmente a jóvenes y colectivos vulnerables.</div>
+  </div>
+
+  <div class="footer">
+    <strong>Fuentes consultadas:</strong> Idealista/news · El Correo Gallego · Fotocasa · Deia · HoyAragón · Irekia/Gobierno Vasco · OVV · Eustat · BOE (Ley 6/2025) · Etikalia · zonatensionadaeuskadi.eus · Noticiasdegipuzkoa.eus
+  </div>
+
+</div><!-- /vivienda -->
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (i === 0 && id === 'seguridad') || (i === 1 && id === 'vivienda'));
+    });
+    document.querySelectorAll('.section').forEach(s => {
+      s.classList.toggle('active', s.id === id);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleNarrative(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  }
+</script>
+
+</body>
+</html>
